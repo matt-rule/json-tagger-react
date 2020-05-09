@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TagList from './components/tag-list';
 
 const userAction = async () => {
   const element = document.getElementById("test");
@@ -28,11 +29,8 @@ function App() {
         >
           Learn React
         </a>
-        <p id='test'></p>
-        <p>
-            <button type="submit" onClick={userAction}>Search</button>
-        </p>
       </header>
+      <TagList />
     </div>
   );
 }
