@@ -1,7 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import TagList from './components/tag-list';
+
+import NavBar from './components/nav-bar';
+import Main from './components/main';
 
 const userAction = async () => {
   const element = document.getElementById("test");
@@ -16,21 +18,8 @@ const userAction = async () => {
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <TagList />
+      <NavBar />
+      <Main />
     </div>
   );
 }

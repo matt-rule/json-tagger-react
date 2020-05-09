@@ -13,6 +13,8 @@ COPY package-lock.json ./
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 RUN npm install typescript --silent
+RUN npm install react-router-dom --silent
+RUN npm install --save @types/react-router-dom --silent
 
 # add app
 COPY . ./
