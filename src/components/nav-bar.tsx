@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 

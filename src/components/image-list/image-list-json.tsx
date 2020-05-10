@@ -1,8 +1,11 @@
 import React from 'react';
 
+import './site.css';
+import './image-list-json.css';
+
 const API_STRING = 'http://localhost:5000/imagelist';
   
-class ImageList extends React.Component<{}, { json:string }> {
+class ImageListJson extends React.Component<{}, { json:string }> {
     constructor(props : any) {
       super(props);
    
@@ -22,11 +25,11 @@ class ImageList extends React.Component<{}, { json:string }> {
 
     render() {
         return (
-            <div className="ImageList">
+            <div className='image-list-json'>
                 { this.state.json }
             </div>
         );
     }
 }
 
-export default ImageList;
+export default ImageListJson;

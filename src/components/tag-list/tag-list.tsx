@@ -1,6 +1,6 @@
 import React from 'react';
 
-const userAction = async () => {
+const fetchData = async () => {
     const element = document.getElementById("test");
     if (element) {
         const response = await fetch('http://localhost:5000/taglist');
@@ -16,7 +16,7 @@ class TagList extends React.Component {
             <div className="TagList">
                 <p id='test'></p>
                 <p>
-                    <button type="submit" onClick={userAction}>Search</button>
+                    <button type="submit" onClick={fetchData}>Search</button>
                 </p>
             </div>
         );
