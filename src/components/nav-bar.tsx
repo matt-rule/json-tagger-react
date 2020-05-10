@@ -17,24 +17,16 @@ class NavBar extends React.Component {
                     crossOrigin="anonymous"
                 />
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                    {/*<Navbar.Brand href="#home">JSON Tagger</Navbar.Brand>*/}
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link href="#features">Features</Nav.Link>
-                            <Nav.Link href="#pricing">Pricing</Nav.Link>
+                            <Nav.Link href="/">Index</Nav.Link>
+                            <Nav.Link href="/image-list">Image list</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
             </div>
-                // <div className="NavBar">
-                //     <Link to="/">
-                //         Index
-                //     </Link>
-                //     <Link to="/image-list">
-                //         Image list
-                //     </Link>
-                // </div>
         );
     }
 }
