@@ -1,3 +1,8 @@
 .image-metadata {
     height: 30vh;
+    background-color: lightgrey;
+}
+
+.full-height-row {
+    height: 100%;
 }

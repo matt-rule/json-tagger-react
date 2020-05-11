@@ -1,7 +1,5 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Row, Col } from 'react-bootstrap';
 
 import ImageDisplay from './image-display';
 import ImageListJson from './image-list-json';
@@ -14,7 +12,7 @@ import './image-list-page-layout.css';
 class ImageListPageLayout extends React.Component {
     render() {
         return (
-            <div className="image-list-layout">
+            <div className='image-list-layout'>
                 <Row>
                     <Col xs={4}>
                         <ImageDisplay />
