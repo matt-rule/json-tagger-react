@@ -1,5 +1,8 @@
 import React from 'react';
 
+import '../../App.css';
+import NavBar from '../nav-bar';
+
 const fetchData = async () => {
     const element = document.getElementById("test");
     if (element) {
@@ -13,11 +16,14 @@ const fetchData = async () => {
 class TagList extends React.Component {
     render() {
         return (
-            <div className="TagList">
-                <p id='test'></p>
-                <p>
-                    <button type="submit" onClick={fetchData}>Search</button>
-                </p>
+            <div className="App">
+              <NavBar />
+                <div className="TagList">
+                    <p id='test'></p>
+                    <p>
+                        <button type="submit" onClick={fetchData}>Search</button>
+                    </p>
+                </div>
             </div>
         );
     }

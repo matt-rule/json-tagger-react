@@ -9,19 +9,24 @@ import 'react-bootstrap/dist/react-bootstrap.min.js';
 
 import './image-list-page-layout.css';
 
+import NavBar from '../nav-bar';
+
 class ImageListPageLayout extends React.Component {
     render() {
         return (
-            <div className='image-list-layout'>
-                <Row>
-                    <Col xs={4}>
-                        <ImageDisplay />
-                        <ImageMetaData />
-                    </Col>
-                    <Col xs={8}>
-                        <ImageListJson />
-                    </Col>
-                </Row>
+            <div className="App">
+              <NavBar />
+                <div className='image-list-layout'>
+                    <Row>
+                        <Col xs={4}>
+                            <ImageDisplay />
+                            <ImageMetaData />
+                        </Col>
+                        <Col xs={8}>
+                            <ImageListJson />
+                        </Col>
+                    </Row>
+                </div>
             </div>
         );
     }
