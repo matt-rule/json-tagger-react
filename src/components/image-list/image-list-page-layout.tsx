@@ -9,6 +9,7 @@ import 'react-bootstrap/dist/react-bootstrap.min.js';
 
 import './image-list-page-layout.css';
 
+import '../../App.css';
 import NavBar from '../nav-bar';
 
 class ImageListPageLayout extends React.Component {
