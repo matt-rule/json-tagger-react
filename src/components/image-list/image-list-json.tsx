@@ -2,23 +2,15 @@ import React from 'react';
 
 import './site.css';
 import './image-list-json.css';
+import ImageListWebResult from './image-list-web-result';
 
 const API_STRING = 'http://localhost:5000/imagelist';
-
-type ImageListWebResult = {
-  origFilePath: string;
-  thumb: string;
-}
 
 class ImageListJson extends React.Component<{}, ImageListWebResult[]> {
     constructor(props : any) {
       super(props);
 
       this.state = [] as ImageListWebResult[];
-      //this.state = [{"origFilePath": "test", "thumb": "test2"},{"origFilePath": "test3", "thumb": "test4"}];
-      // this.state = {
-      //   json: "",
-      // };
     }
 
     componentDidMount() {
