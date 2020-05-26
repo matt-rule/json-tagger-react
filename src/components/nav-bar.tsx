@@ -21,7 +21,7 @@ class NavBar extends React.Component {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Nav.Link href="/">Index</Nav.Link>
-                            <Nav.Link href="/image-list">Image list</Nav.Link>
+                            <Nav.Link href="/file-list">File list</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>

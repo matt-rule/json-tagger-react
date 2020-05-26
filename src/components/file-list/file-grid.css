@@ -1,0 +1,10 @@
+.file-list-json {
+    word-wrap: break-word;
+    overflow:hidden;
+}
+
+.no-wrap-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

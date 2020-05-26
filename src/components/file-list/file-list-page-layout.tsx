@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import ImageDisplay from './image-display';
-import FileListJson from './file-list-json';
+import FileListJson from './file-grid';
 import FileMetaData from './file-metadata';
 
 import 'react-bootstrap/dist/react-bootstrap.min.js';
@@ -19,12 +19,12 @@ class FileListPageLayout extends React.Component {
               <NavBar />
                 <div className='file-list-layout'>
                     <Row>
+                        <Col xs={8}>
+                            <FileListJson />
+                        </Col>
                         <Col xs={4}>
                             <ImageDisplay />
                             <FileMetaData />
-                        </Col>
-                        <Col xs={8}>
-                            <FileListJson />
                         </Col>
                     </Row>
                 </div>
