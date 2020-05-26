@@ -1,8 +1,8 @@
 import React from 'react';
 
-type ImageListWebResult = {
+type FileListWebResult = {
     origFilePath: string;
     thumb: string;
   }
 
-export default ImageListWebResult;
+export default FileListWebResult;

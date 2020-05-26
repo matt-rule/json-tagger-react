@@ -1,8 +1,8 @@
 import React from 'react';
 
 import './site.css';
-import './image-list-json.css';
-import ImageListWebResult from './image-list-web-result';
+import './file-list-json.css';
+import ImageListWebResult from './file-list-web-result';
 
 const API_STRING = 'http://localhost:5000/imagelist';
 
@@ -29,7 +29,7 @@ class ImageListJson extends React.Component<{}, ImageListWebResult[]> {
         let jsonString : string = JSON.stringify(fileMetadataFromApi);
 
         return (
-            <div className='image-list-json'>
+            <div className='file-list-json'>
                 { jsonString }
             </div>
         );

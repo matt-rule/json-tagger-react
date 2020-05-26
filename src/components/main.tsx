@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import ImageListPageLayout from './image-list/image-list-page-layout';
+import ImageListPageLayout from './file-list/file-list-page-layout';
 import TagList from './tag-list/tag-list';
 import FileView from './file-view';
 import PageNotFound from './page-not-found';

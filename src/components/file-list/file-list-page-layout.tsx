@@ -2,29 +2,29 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import ImageDisplay from './image-display';
-import ImageListJson from './image-list-json';
-import ImageMetaData from './image-metadata';
+import FileListJson from './file-list-json';
+import FileMetaData from './file-metadata';
 
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 
-import './image-list-page-layout.css';
+import './file-list-page-layout.css';
 
 import '../../App.css';
 import NavBar from '../nav-bar';
 
-class ImageListPageLayout extends React.Component {
+class FileListPageLayout extends React.Component {
     render() {
         return (
             <div className="App">
               <NavBar />
-                <div className='image-list-layout'>
+                <div className='file-list-layout'>
                     <Row>
                         <Col xs={4}>
                             <ImageDisplay />
-                            <ImageMetaData />
+                            <FileMetaData />
                         </Col>
                         <Col xs={8}>
-                            <ImageListJson />
+                            <FileListJson />
                         </Col>
                     </Row>
                 </div>
@@ -33,4 +33,4 @@ class ImageListPageLayout extends React.Component {
     }
 }
 
-export default ImageListPageLayout;
+export default FileListPageLayout;

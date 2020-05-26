@@ -4,12 +4,12 @@ import { Row, Col } from 'react-bootstrap';
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 
 import './site.css';
-import './image-metadata.css';
+import './file-metadata.css';
 
-class ImageMetaData extends React.Component {
+class FileMetaData extends React.Component {
     render() {
         return (
-            <div className="image-metadata">
+            <div className="file-metadata">
                 <Row className='full-height-row'>
                     <Col xs={2}>
                     </Col>
@@ -21,4 +21,4 @@ class ImageMetaData extends React.Component {
     }
 }
 
-export default ImageMetaData;
+export default FileMetaData;
