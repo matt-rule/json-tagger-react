@@ -33,7 +33,7 @@ class FileGrid extends React.Component<{}, FileListWebResult[]> {
           fileMetadataFromApi
           .map(x =>
             <Col xs={2}>
-              <img src={x.thumb} />
+              <img src={"file/thumbnails/thumb_" + x.guid + ".jpg"} />
               <p className='no-wrap-text'>
                 {x.origFilePath}
               </p>
