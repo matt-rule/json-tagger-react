@@ -15,23 +15,32 @@ import NavBar from '../nav-bar';
 
 const API_STRING = 'http://localhost:5000/imagelist';
 
-class FileListPageLayout extends React.Component<{}, {fileMetadataArray : Array<FileListWebResult>}> {
+type FileListPageState = {
+    fileMetadataArray : Array<FileListWebResult>
+    selectedIndex : number
+}
+
+class FileListPageLayout extends React.Component<{}, {pageState : FileListPageState}> {
 
     constructor(props : any) {
       super(props);
 
-      this.state = { fileMetadataArray : [] as Array<FileListWebResult> }
+      this.state = {pageState : {fileMetadataArray : [] as Array<FileListWebResult>, selectedIndex : 0} as FileListPageState}
     }
     
     componentDidMount() {
         fetch(API_STRING)
           .then(response => response.json())
           .then(x => x as FileListWebResult[])
-          .then(json => this.setState({fileMetadataArray : json as Array<FileListWebResult>}))
+          .then(json => this.setState({pageState : {fileMetadataArray : json as Array<FileListWebResult>, selectedIndex : 0} as FileListPageState}))
+    }
+
+    handleSelectedImageChanged() {
+        
     }
 
     render() {
-        let fileMetadataArray = this.state.fileMetadataArray
+        let fileMetadataArray = this.state.pageState.fileMetadataArray
         return (
             <div className="App">
               <NavBar />
