@@ -1,10 +1,11 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
-import ImageDisplay from './image-preview';
 import FileGrid from './file-grid';
-import FileMetaData from './file-metadata';
 import FileListWebResult from './file-list-web-result';
+import FileMetaData from './file-metadata';
+import FileSearch from './file-search';
+import ImageDisplay from './image-preview';
 
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 
@@ -23,16 +24,16 @@ type FileListPageState = {
 class FileListPageLayout extends React.Component<{}, {pageState : FileListPageState}> {
 
     constructor(props : any) {
-      super(props);
+        super(props);
 
-      this.state = {pageState : {fileMetadataArray : [] as Array<FileListWebResult>, selectedIndex : 0} as FileListPageState}
+        this.state = {pageState : {fileMetadataArray : [] as Array<FileListWebResult>, selectedIndex : 0} as FileListPageState}
     }
     
     componentDidMount() {
         fetch(API_STRING)
-          .then(response => response.json())
-          .then(x => x as FileListWebResult[])
-          .then(json => this.setState({pageState : {fileMetadataArray : json as Array<FileListWebResult>, selectedIndex : 0} as FileListPageState}))
+            .then(response => response.json())
+            .then(x => x as FileListWebResult[])
+            .then(json => this.setState({pageState : {fileMetadataArray : json as Array<FileListWebResult>, selectedIndex : 0} as FileListPageState}))
     }
 
     handleSelectedImageChanged = (index : number) => {
@@ -54,6 +55,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                 <div className='file-list-layout'>
                     <Row>
                         <Col xs={8}>
+                            <FileSearch />
                             <FileGrid fileMetadataArray={fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
                         </Col>
                         <Col xs={4}>

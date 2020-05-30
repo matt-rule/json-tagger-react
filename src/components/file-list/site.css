@@ -9,3 +9,7 @@
   display: -ms-flexbox;
   display: flex;
 }
+
+.col-style {
+  overflow-wrap:break-word;
+}
