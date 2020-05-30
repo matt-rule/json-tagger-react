@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
-import ImageDisplay from './image-display';
+import ImageDisplay from './image-preview';
 import FileGrid from './file-grid';
 import FileMetaData from './file-metadata';
 import FileListWebResult from './file-list-web-result';

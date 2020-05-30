@@ -10,7 +10,7 @@ class FileMetaData extends React.Component {
     render() {
         return (
             <div className="file-metadata">
-                <Row className='full-height-row'>
+                <Row className='full-height-row m-0'>
                     <Col xs={2}>
                     </Col>
                     <Col xs={10} className='bg-white'>
