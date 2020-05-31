@@ -4,10 +4,10 @@ import { Row, Col } from 'react-bootstrap';
 import './site.css';
 import './file-search.css';
 
-class FileSearch extends React.Component<{}, {searchInput : string}> {
+class FileSearch extends React.Component<{submitPropFunction : (searchString : string) => void}, {searchInput : string, functionToCall : (searchString : string) => void}> {
     constructor(props : any) {
         super(props);
-        this.state = {searchInput: ''};
+        this.state = {searchInput: '', functionToCall: this.props.submitPropFunction};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,7 +18,8 @@ class FileSearch extends React.Component<{}, {searchInput : string}> {
     }
 
     handleSubmit(event : any) {
-        // alert('A name was submitted: ' + this.state.searchInput);
+        this.state.functionToCall(this.state.searchInput);
+        //window.location.href = '/file-list?query=' + this.state.searchInput;
         event.preventDefault();
     }
 
