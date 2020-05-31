@@ -12,7 +12,7 @@ const FileGrid = ({fileMetadataArray, functionToCall} : {fileMetadataArray : Arr
                 fileMetadataArray
                 .map((x, i) =>
                     <Col key={x.guid} xs={2}>
-                    <img alt='thumbnail' src={'file/thumbnails/thumb_' + x.guid + '.jpg'} onClick={e => functionToCall(i)} />
+                    <img alt='thumbnail' src={'/file/thumbnails/thumb_' + x.guid + '.jpg'} onClick={e => functionToCall(i)} />
                     <p className='no-wrap-text' onClick={e => functionToCall(i)}>
                         {x.origFilePath}
                     </p>
