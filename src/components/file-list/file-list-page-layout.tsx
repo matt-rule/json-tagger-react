@@ -16,6 +16,7 @@ import '../../App.css';
 import NavBar from '../nav-bar';
 
 const API_STRING = 'http://localhost:5000/filelist';
+const LOCAL_STRING = 'file-list';
 
 type FileListPageState = {
     fileMetadataArray : Array<FileListWebResult>
@@ -33,61 +34,99 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
             pageState : {
                 fileMetadataArray : [] as Array<FileListWebResult>,
                 searchString : '',
+                page : 1,
                 selectedIndex : 0
             } as FileListPageState
         }
     }
+
+    constructApiQueryString(query : string, page : number) {
+        const args = [
+            query === "" ? "" : ("query=" + query),
+            page === 1 ? "" : ("page=" + page)
+        ].filter(x => x !== "")
+        return API_STRING + (args.length === 0 ? "" : "?" + args.reduce((x, y) => x + "&" + y));
+    }
+
+    constructLocalQueryString(query : string, page : number, selected : number) {
+        const args = [
+            query === "" ? "" : ("query=" + query),
+            page === 1 ? "" : ("page=" + page),
+            selected === 0 ? "" : ("selected=" + selected)
+        ].filter(x => x !== "")
+        return LOCAL_STRING + (args.length === 0 ? "" : "?" + args.reduce((x, y) => x + "&" + y));
+    }
+
+    applyState(state : FileListPageState) {
+        this.setState({pageState : state});
+
+        window.history.pushState(
+            state,
+            'Json Tagger',
+            this.constructLocalQueryString(state.searchString, state.page, state.selectedIndex)
+        );
+    }
     
-    doApiFetch(searchInput : string) {
-        fetch(searchInput === '' ? API_STRING : API_STRING + '?query=' + searchInput, {
+    doApiFetch(searchInput : string, resultPage : number) {
+        fetch(this.constructApiQueryString(searchInput, resultPage), {
             // headers : { 
             //     'Content-Type': 'application/json',
             //     'Accept': 'application/json'
             //    }
-
         })
             .then(response => response.json())
             .then(x => x as FileListWebResult[])
-            .then(json => this.setState(
+            .then(json => this.applyState(
                 {
-                    pageState : {
-                        fileMetadataArray : json as Array<FileListWebResult>,
-                        searchString : searchInput,
-                        selectedIndex : 0
-                    } as FileListPageState
-                }
+                    fileMetadataArray : json as Array<FileListWebResult>,
+                    searchString : searchInput,
+                    page : resultPage,
+                    selectedIndex : 0
+                } as FileListPageState
             ))
     }
 
     componentDidMount() {
-        this.doApiFetch('');
+        this.doApiFetch('', 1);
     }
 
     handleSelectedImageChanged = (index : number) => {
-        this.setState(
+        this.applyState(
             {
-                pageState : {
-                    fileMetadataArray : this.state.pageState.fileMetadataArray as Array<FileListWebResult>,
-                    searchString : this.state.pageState.searchString as string,
-                    selectedIndex : index
-                } as FileListPageState
-            }
+                fileMetadataArray : this.state.pageState.fileMetadataArray,
+                searchString : this.state.pageState.searchString,
+                page : this.state.pageState.page,
+                selectedIndex : index
+            } as FileListPageState
         );
     }
 
     handleSearchSubmit = (searchString : string) => {
-        this.setState(
-            {
-                pageState : {
-                    fileMetadataArray : this.state.pageState.fileMetadataArray as Array<FileListWebResult>,
-                    searchString : searchString as string,
-                    selectedIndex : 0
-                } as FileListPageState
-            }
-        );
-        // TODO: Consider whether it is better to wait until the fetch is done, then update the display using this.state.pageState.searchString. Might require moving
-        // code about between functions, using async, and/or handling state in a different way.
-        this.doApiFetch(searchString);
+        this.doApiFetch(searchString, 1);
+    }
+
+    setPageNumber = (newPageNumber : number) => {
+        this.doApiFetch(this.state.pageState.searchString, newPageNumber);
+    }
+
+    safeDecrement = (n : number) => {
+        return n <= 1 ? 1 : n - 1
+    }
+
+    safeIncrement = (n : number) => {
+        return n + 1
+    }
+
+    handlePrevButtonClicked = () => {
+        this.setPageNumber(this.safeDecrement(this.state.pageState.page));
+
+        return false;
+    }
+
+    handleNextButtonClicked = () => {
+        this.setPageNumber(this.safeIncrement(this.state.pageState.page));
+
+        return false;
     }
 
     // TODO: Consider how to reduce the number of null checks
@@ -121,7 +160,22 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                         <Col xs={8}>
                             <FileSearch submitPropFunction={this.handleSearchSubmit} />
                             <FileGrid fileMetadataArray={this.state.pageState?.fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
-                            <PagingBar processedQuery={this.state.pageState?.searchString ?? ""} page={this.state.pageState?.page ?? 1}/>
+                            <PagingBar processedQuery={
+                                this.state.pageState?.searchString ?? ""}
+                                page={this.state.pageState?.page ?? 1}
+                                prevLink={this.constructLocalQueryString(
+                                    this.state.pageState?.searchString,
+                                    this.safeDecrement(this.state.pageState.page),
+                                    0
+                                )}
+                                nextLink={this.constructLocalQueryString(
+                                    this.state.pageState?.searchString,
+                                    this.safeIncrement(this.state.pageState.page),
+                                    0
+                                )}
+                                prevClickHandler={this.handlePrevButtonClicked}
+                                nextClickHandler={this.handleNextButtonClicked}
+                            />
                         </Col>
                         <Col xs={4}>
                             <ImageDisplay imageGuid={this.getSelectedImagePath(this.state.pageState)}/>

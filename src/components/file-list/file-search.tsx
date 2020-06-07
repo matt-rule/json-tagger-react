@@ -19,7 +19,6 @@ class FileSearch extends React.Component<{submitPropFunction : (searchString : s
 
     handleSubmit(event : any) {
         this.state.functionToCall(this.state.searchInput);
-        //window.location.href = '/file-list?query=' + this.state.searchInput;
         event.preventDefault();
     }
 
