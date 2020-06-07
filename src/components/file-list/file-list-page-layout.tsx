@@ -88,14 +88,27 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
         this.doApiFetch(searchString);
     }
 
+    // TODO: Consider how to reduce the number of null checks
+    getSelectedImagePath = (pageState : FileListPageState) : string => {
+        let selectedObject = pageState.fileMetadataArray[pageState.selectedIndex];
+
+        if (selectedObject == null)
+            return "";
+
+        let regexResult = /(?:\.([^.]+))?$/.exec(selectedObject.origFilePath);
+
+        if (regexResult == null)
+            return "";
+
+        let fileExtension = regexResult[1];
+
+        if (fileExtension == null || selectedObject.guid == null)
+            return "";
+
+        return 'file/' + selectedObject.guid + '.' + fileExtension;
+    }
+
     render() {
-        let fileMetadataArray = this.state.pageState.fileMetadataArray;
-        let selectedIndex = this.state.pageState.selectedIndex;
-        let selectedObject = this.state.pageState.fileMetadataArray[selectedIndex];
-        let regx = /(?:\.([^.]+))?$/;
-        let regexResult = regx.exec(selectedObject?.origFilePath);
-        let fileExtension : string | undefined = regexResult === null ? undefined : regexResult[1];
-        let imagePath : string | undefined = (selectedObject?.guid === null || fileExtension === null) ? undefined : 'file/' + selectedObject?.guid + '.' + fileExtension;
         return (
             <div className="App">
               <NavBar />
@@ -103,10 +116,10 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                     <Row>
                         <Col xs={8}>
                             <FileSearch submitPropFunction={this.handleSearchSubmit} />
-                            <FileGrid fileMetadataArray={fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
+                            <FileGrid fileMetadataArray={this.state.pageState?.fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
                         </Col>
                         <Col xs={4}>
-                            <ImageDisplay imageGuid={imagePath}/>
+                            <ImageDisplay imageGuid={this.getSelectedImagePath(this.state.pageState)}/>
                             <FileMetaData />
                         </Col>
                     </Row>
