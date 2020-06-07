@@ -20,6 +20,7 @@ const API_STRING = 'http://localhost:5000/filelist';
 type FileListPageState = {
     fileMetadataArray : Array<FileListWebResult>
     searchString : string
+    page: number
     selectedIndex : number
 }
 
@@ -51,7 +52,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                 {
                     pageState : {
                         fileMetadataArray : json as Array<FileListWebResult>,
-                        searchString : '' as string,
+                        searchString : searchInput,
                         selectedIndex : 0
                     } as FileListPageState
                 }
@@ -120,7 +121,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                         <Col xs={8}>
                             <FileSearch submitPropFunction={this.handleSearchSubmit} />
                             <FileGrid fileMetadataArray={this.state.pageState?.fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
-                            <PagingBar />
+                            <PagingBar processedQuery={this.state.pageState?.searchString ?? ""} page={this.state.pageState?.page ?? 1}/>
                         </Col>
                         <Col xs={4}>
                             <ImageDisplay imageGuid={this.getSelectedImagePath(this.state.pageState)}/>

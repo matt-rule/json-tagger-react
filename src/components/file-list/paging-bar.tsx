@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import './site.css';
@@ -25,20 +25,51 @@ import './paging-bar.css';
 //         );
 // };
 
-const PageNavigation = () => (
+const prevLink : (processedQuery : string, page : number) => string = (processedQuery : string, page : number) => {
+    let queryArg = processedQuery === "" ? "" : ("query=" + processedQuery);
+    let pageArg = page === 1 ? "" : ("page=" + page);
+    let args = [queryArg, pageArg].filter(x => x !== "")
+    return "file-list" + (args.length === 0 ? "" : "?" + args.reduce((x, y) => x + "&" + y));
+}
 
-    // @{string prevlink = Model.ConstructLink(Model.ActiveSearchQuery, Model.PageIndex - 1, 0);}
-    // @{string nextlink = Model.ConstructLink(Model.ActiveSearchQuery, Model.PageIndex + 1, 0);}
-    <div className='paging-bar'>
-        <Row>
-            <Col><a className='paging-link' href=''>Prev</a></Col>
-            <Col><a className='paging-link' href=''>Next</a></Col>
-        </Row>
-    </div>
-    // <div class="row zero-padding row-eq-height">
-    //     <div class="col-md-6 col-style"><a href="@prevlink">Prev</a></div>
-    //     <div class="col-md-6 col-style"><a href="@nextlink">Next</a></div>
-    // </div>
-);
+const nextLink : (processedQuery : string, page : number) => string = (processedQuery : string, page : number) => {
+    return "file-list";
+}
 
-export default PageNavigation;
+function prevLinkClickHandler() {
+    return false;
+}
+
+function nextLinkClickHandler() {
+    return false;
+}
+
+function PagingBar({processedQuery, page} : {processedQuery: string, page : number} ) {
+    useEffect(() => {
+        var prevLink = document.getElementById("prev-link");
+        if (prevLink != null)
+            prevLink.onclick = prevLinkClickHandler;
+
+        var nextLink = document.getElementById("next-link");
+        if (nextLink != null)
+            nextLink.onclick = nextLinkClickHandler;
+    });
+
+    return (
+
+        // @{string prevlink = Model.ConstructLink(Model.ActiveSearchQuery, Model.PageIndex - 1, 0);}
+        // @{string nextlink = Model.ConstructLink(Model.ActiveSearchQuery, Model.PageIndex + 1, 0);}
+        <div className='paging-bar'>
+            <Row>
+                <Col><a id='prev-link' className='paging-link' href={prevLink(processedQuery, page)}>Prev</a></Col>
+                <Col><a id='next-link' className='paging-link' href={nextLink(processedQuery, page)}>Next</a></Col>
+            </Row>
+        </div>
+        // <div class="row zero-padding row-eq-height">
+        //     <div class="col-md-6 col-style"><a href="@prevlink">Prev</a></div>
+        //     <div class="col-md-6 col-style"><a href="@nextlink">Next</a></div>
+        // </div>
+    );
+}
+
+export default PagingBar;
