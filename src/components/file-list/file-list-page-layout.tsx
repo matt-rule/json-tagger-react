@@ -7,6 +7,7 @@ import FileMetaData from './file-metadata';
 import FileSearch from './file-search';
 import ImageDisplay from './image-preview';
 import PagingBar from './paging-bar';
+import UrlHandling from './url-handling';
 
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 
@@ -14,9 +15,6 @@ import './file-list-page-layout.css';
 
 import '../../App.css';
 import NavBar from '../nav-bar';
-
-const API_STRING = 'http://localhost:5000/filelist';
-const LOCAL_STRING = 'file-list';
 
 type FileListPageState = {
     fileMetadataArray : Array<FileListWebResult>
@@ -40,35 +38,18 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
         }
     }
 
-    constructApiQueryString(query : string, page : number) {
-        const args = [
-            query === "" ? "" : ("query=" + query),
-            page === 1 ? "" : ("page=" + page)
-        ].filter(x => x !== "")
-        return API_STRING + (args.length === 0 ? "" : "?" + args.reduce((x, y) => x + "&" + y));
-    }
-
-    constructLocalQueryString(query : string, page : number, selected : number) {
-        const args = [
-            query === "" ? "" : ("query=" + query),
-            page === 1 ? "" : ("page=" + page),
-            selected === 0 ? "" : ("selected=" + selected)
-        ].filter(x => x !== "")
-        return LOCAL_STRING + (args.length === 0 ? "" : "?" + args.reduce((x, y) => x + "&" + y));
-    }
-
     applyState(state : FileListPageState) {
         this.setState({pageState : state});
 
         window.history.pushState(
             state,
             'Json Tagger',
-            this.constructLocalQueryString(state.searchString, state.page, state.selectedIndex)
+            UrlHandling.constructLocalQueryString(state.searchString, state.page, state.selectedIndex)
         );
     }
     
     doApiFetch(searchInput : string, resultPage : number) {
-        fetch(this.constructApiQueryString(searchInput, resultPage), {
+        fetch(UrlHandling.constructApiQueryString(searchInput, resultPage), {
             // headers : { 
             //     'Content-Type': 'application/json',
             //     'Accept': 'application/json'
@@ -99,6 +80,13 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                 selectedIndex : index
             } as FileListPageState
         );
+
+        return false;
+    }
+
+    // Returns a parameterless void function which calls handleSelectedImageChanged with the given index.
+    metaHandleSelectedImageChanged = (index : number) => {
+        return (() => this.handleSelectedImageChanged(index));
     }
 
     handleSearchSubmit = (searchString : string) => {
@@ -159,16 +147,21 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                     <Row>
                         <Col xs={8}>
                             <FileSearch submitPropFunction={this.handleSearchSubmit} />
-                            <FileGrid fileMetadataArray={this.state.pageState?.fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
-                            <PagingBar processedQuery={
-                                this.state.pageState?.searchString ?? ""}
-                                page={this.state.pageState?.page ?? 1}
-                                prevLink={this.constructLocalQueryString(
+                            <FileGrid
+                                fileMetadataArray={this.state.pageState?.fileMetadataArray}
+                                itemLinkClickHandler={this.metaHandleSelectedImageChanged}
+                                incompleteUrl={UrlHandling.incompleteLocalQueryString(
+                                    this.state.pageState.searchString,
+                                    this.state.pageState.page
+                                )}
+                                />
+                            <PagingBar
+                                prevUrl={UrlHandling.constructLocalQueryString(
                                     this.state.pageState?.searchString,
                                     this.safeDecrement(this.state.pageState.page),
                                     0
                                 )}
-                                nextLink={this.constructLocalQueryString(
+                                nextUrl={UrlHandling.constructLocalQueryString(
                                     this.state.pageState?.searchString,
                                     this.safeIncrement(this.state.pageState.page),
                                     0
