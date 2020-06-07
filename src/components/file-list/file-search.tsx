@@ -25,16 +25,18 @@ class FileSearch extends React.Component<{submitPropFunction : (searchString : s
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <Row className='search-row'>
-                    <Col xs={11} className='col-style'>
-                        <input type='text' className='search-text-input' value={this.state.searchInput} onChange={this.handleChange} />
-                    </Col>
-                    <Col xs={1} className='col-style'>
-                        <input type='submit' className='search-button' value='Search' />
-                    </Col>
-                </Row>
-            </form>
+            <div className='search-outer'>
+                <form onSubmit={this.handleSubmit}>
+                    <Row className='search-row'>
+                        <Col xs={11} className='col-style input-col'>
+                            <input type='text' className='search-text-input' value={this.state.searchInput} onChange={this.handleChange} />
+                        </Col>
+                        <Col xs={1} className='col-style zero-left-right-padding'>
+                            <input type='submit' className='search-button' value='Search' />
+                        </Col>
+                    </Row>
+                </form>
+            </div>
         );
     }
 }

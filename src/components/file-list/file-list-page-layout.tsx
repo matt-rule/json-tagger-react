@@ -6,6 +6,7 @@ import FileListWebResult from './file-list-web-result';
 import FileMetaData from './file-metadata';
 import FileSearch from './file-search';
 import ImageDisplay from './image-preview';
+import PagingBar from './paging-bar';
 
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 
@@ -89,6 +90,8 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
     }
 
     // TODO: Consider how to reduce the number of null checks
+    // Note that a juggling-check on null covers both null and undefined
+    // https://stackoverflow.com/questions/28975896/is-there-a-way-to-check-for-both-null-and-undefined
     getSelectedImagePath = (pageState : FileListPageState) : string => {
         let selectedObject = pageState.fileMetadataArray[pageState.selectedIndex];
 
@@ -117,6 +120,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
                         <Col xs={8}>
                             <FileSearch submitPropFunction={this.handleSearchSubmit} />
                             <FileGrid fileMetadataArray={this.state.pageState?.fileMetadataArray} functionToCall={this.handleSelectedImageChanged} />
+                            <PagingBar />
                         </Col>
                         <Col xs={4}>
                             <ImageDisplay imageGuid={this.getSelectedImagePath(this.state.pageState)}/>

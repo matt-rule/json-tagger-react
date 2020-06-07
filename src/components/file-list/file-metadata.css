@@ -1,8 +1,14 @@
 .file-metadata {
-    background-color: lightgrey;
+    background-color: #5c6875;
 }
 
 .full-height-row {
     height: 40vh;
     margin: 0px;
+}
+
+.json-box {
+    background-color: #a0b1c4;
+    width: 100%;
+    height: 100%;
 }

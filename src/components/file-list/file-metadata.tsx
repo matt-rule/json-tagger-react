@@ -13,7 +13,8 @@ class FileMetaData extends React.Component {
                 <Row className='full-height-row m-0'>
                     <Col xs={2}>
                     </Col>
-                    <Col xs={10} className='bg-white'>
+                    <Col xs={10}>
+                        <pre className='json-box'></pre>
                     </Col>
                 </Row>
             </div>

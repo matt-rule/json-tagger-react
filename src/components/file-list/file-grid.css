@@ -8,3 +8,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.file-grid {
+    background-color: #5c6875;
+    padding-top: 20px;
+}
