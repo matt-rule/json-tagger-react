@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 import FileGrid from './file-grid';
-import FileListWebResult from './file-list-web-result';
+import FileInfoItem from './file-info-item';
 import FileMetaData from './file-metadata';
 import FileSearch from './file-search';
 import ImageDisplay from './image-preview';
@@ -19,7 +19,7 @@ import '../../App.css';
 import NavBar from '../nav-bar';
 
 type FileListPageState = {
-    fileMetadataArray : Array<FileListWebResult>
+    fileMetadataArray : Array<FileInfoItem>
     searchString : string
     page: number
     selectedIndex : number
@@ -46,7 +46,7 @@ class FileListPageLayout extends React.Component<FileListPageProps, {pageState :
 
         this.state = {
             pageState : {
-                fileMetadataArray : [] as Array<FileListWebResult>,
+                fileMetadataArray : [] as Array<FileInfoItem>,
                 searchString : queryParams.query ?? '',
                 page : queryParams.page ?? 1,
                 selectedIndex : queryParams.selected ?? 0
@@ -67,10 +67,10 @@ class FileListPageLayout extends React.Component<FileListPageProps, {pageState :
     doApiFetch(searchInput : string, resultPage : number) {
         fetch(UrlHandling.constructApiQueryString(searchInput, resultPage), {})
             .then(response => response.json())
-            .then(x => x as FileListWebResult[])
+            .then(x => x as FileInfoItem[])
             .then(json => this.applyState(
                 {
-                    fileMetadataArray : json as Array<FileListWebResult>,
+                    fileMetadataArray : json as Array<FileInfoItem>,
                     searchString : searchInput,
                     page : resultPage,
                     selectedIndex : 0
@@ -151,6 +151,15 @@ class FileListPageLayout extends React.Component<FileListPageProps, {pageState :
         return 'file/' + selectedObject.guid + '.' + fileExtension;
     }
 
+    getSelectedImageMetadata = (pageState : FileListPageState) : string => {
+        let selectedObject = pageState.fileMetadataArray[pageState.selectedIndex];
+
+        if (selectedObject == null || selectedObject.metadataJson == null)
+            return "";
+
+        return selectedObject.metadataJson;
+    }
+
     render() {
         return (
             <div className="App">
@@ -184,7 +193,7 @@ class FileListPageLayout extends React.Component<FileListPageProps, {pageState :
                         </Col>
                         <Col xs={4}>
                             <ImageDisplay imageGuid={this.getSelectedImagePath(this.state.pageState)}/>
-                            <FileMetaData />
+                            <FileMetaData fileMetadataJson={this.getSelectedImageMetadata(this.state.pageState)}/>
                         </Col>
                     </Row>
                 </div>

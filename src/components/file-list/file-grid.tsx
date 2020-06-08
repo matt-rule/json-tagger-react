@@ -3,9 +3,9 @@ import { Row, Col } from 'react-bootstrap';
 
 import './site.css';
 import './file-grid.css';
-import FileListWebResult from './file-list-web-result';
+import FileInfoItem from './file-info-item';
 
-function FileGrid({fileMetadataArray, itemLinkClickHandler, incompleteUrl} : {fileMetadataArray : Array<FileListWebResult>, itemLinkClickHandler : (index : number) => (() => void), incompleteUrl : string}) {
+function FileGrid({fileMetadataArray, itemLinkClickHandler, incompleteUrl} : {fileMetadataArray : Array<FileInfoItem>, itemLinkClickHandler : (index : number) => (() => void), incompleteUrl : string}) {
     useEffect(() => {
         for (let i = 0; i < fileMetadataArray.length; i++) {
             var link = document.getElementById("grid-item-" + i);

@@ -6,20 +6,26 @@ import 'react-bootstrap/dist/react-bootstrap.min.js';
 import './site.css';
 import './file-metadata.css';
 
-class FileMetaData extends React.Component {
-    render() {
-        return (
-            <div className="file-metadata">
-                <Row className='full-height-row m-0'>
-                    <Col xs={2}>
-                    </Col>
-                    <Col xs={10}>
-                        <pre className='json-box'></pre>
-                    </Col>
-                </Row>
-            </div>
-        );
-    }
-}
+const FileMetaData = ({fileMetadataJson} : {fileMetadataJson?: string}) => (
+    <div className="file-metadata">
+        <Row className='full-height-row m-0'>
+            <Col xs={2}>
+            </Col>
+            <Col xs={10}>
+                <pre className='json-box'>{fileMetadataJson}</pre>
+            </Col>
+        </Row>
+    </div>
+);
+
+// class FileMetaData extends React.Component {
+//     render() {
+//         return (
+//             <Row className='full-height-row m-0'>
+//                ...
+//             </Row>
+//         );
+//     }
+// }
 
 export default FileMetaData;
