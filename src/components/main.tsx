@@ -17,7 +17,7 @@ const Main = () => {
             <Route exact path='/tag-list' component={TagList} />
             <Route exact path='/file-list' component={FileListPageLayout} />
             <Route path="/file/:url?" component={FileView} />
-            <Route component={PageNotFound}></Route>
+            <Route component={PageNotFound} />
         </Switch>
     );
 }

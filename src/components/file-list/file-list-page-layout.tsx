@@ -9,6 +9,8 @@ import ImageDisplay from './image-preview';
 import PagingBar from './paging-bar';
 import UrlHandling from './url-handling';
 
+import QueryString from 'querystring';
+
 import 'react-bootstrap/dist/react-bootstrap.min.js';
 
 import './file-list-page-layout.css';
@@ -23,17 +25,31 @@ type FileListPageState = {
     selectedIndex : number
 }
 
-class FileListPageLayout extends React.Component<{}, {pageState : FileListPageState}> {
+interface FileListPageProps {
+    location : {
+        search : string
+    }
+}
+
+interface FileListQueryParams {
+    query? : string
+    page? : string
+    selected? : string
+}
+
+class FileListPageLayout extends React.Component<FileListPageProps, {pageState : FileListPageState}> {
 
     constructor(props : any) {
         super(props);
 
+        let queryParams = QueryString.decode(props.location.search.substr(1)) as FileListQueryParams
+
         this.state = {
             pageState : {
                 fileMetadataArray : [] as Array<FileListWebResult>,
-                searchString : '',
-                page : 1,
-                selectedIndex : 0
+                searchString : queryParams.query ?? '',
+                page : queryParams.page ?? 1,
+                selectedIndex : queryParams.selected ?? 0
             } as FileListPageState
         }
     }
@@ -49,12 +65,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
     }
     
     doApiFetch(searchInput : string, resultPage : number) {
-        fetch(UrlHandling.constructApiQueryString(searchInput, resultPage), {
-            // headers : { 
-            //     'Content-Type': 'application/json',
-            //     'Accept': 'application/json'
-            //    }
-        })
+        fetch(UrlHandling.constructApiQueryString(searchInput, resultPage), {})
             .then(response => response.json())
             .then(x => x as FileListWebResult[])
             .then(json => this.applyState(
@@ -68,7 +79,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
     }
 
     componentDidMount() {
-        this.doApiFetch('', 1);
+        this.doApiFetch(this.state.pageState.searchString, this.state.pageState.page);
     }
 
     handleSelectedImageChanged = (index : number) => {
@@ -102,6 +113,7 @@ class FileListPageLayout extends React.Component<{}, {pageState : FileListPageSt
     }
 
     safeIncrement = (n : number) => {
+        // TODO: Implement maximum
         return n + 1
     }
 
